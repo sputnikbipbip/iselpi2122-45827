@@ -8,7 +8,7 @@ function inspect(obj) {
 }
 
 function functionType () {
-    console.log('BullsEye son of a bitch')
+    console.log('function call was a success')
 }
 
 const obj = {
