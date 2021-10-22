@@ -3,7 +3,7 @@ function deepEqual (o1, o2) {
         return o1 === o2 ? true : false
     let oneKeys = Object.keys(o1)
     let sizeCheck = Object.keys(o2).length
-    if (sizeCheck !== oneKeys.length)
+    if (sizeCheck != oneKeys.length)
         return false
     for (key of oneKeys) {
         if (o1[key] != o2[key]) {
