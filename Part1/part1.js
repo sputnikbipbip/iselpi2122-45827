@@ -44,40 +44,24 @@ console.log(objsFiltered)
    { }
 */
 
-function zip(a, combiner) {
-    
+Array.prototype.zip = function (a, combiner) {
+    let size = 0
+    let res = []
+    this.length >= a.length ? size = a.length : size = this.length
+    for(let i = 0; i < size; i++) {
+        res.push(combiner(this[i], a[i]))
+    }
+    return res; 
 }
 
-[1,2,3].zip(
-    [4,5,6], 
-    function(left, right) { 
-        return left + right
-    }
-) 
-// [5,7,9]
 
-[1,2,3].zip(
-    [4,5,6,7,8],
-    (left, right) => left + right
-) 
-// [5,7,9]
+console.log([1,2,3].zip([4,5,6], function(left, right) { return left + right})) // [5,7,9]
 
-[1,2,3].zip(
-    [4,5],
-    (left, right) => left + right
-)
-// [5,7]
+console.log([1,2,3].zip([4,5,6,7,8], (left, right) => left + right)) // [5,7,9]
 
-[1,2,3].zip(
-    [],
-    (left, right) => left + right
-) 
-// []
+console.log([1,2,3].zip([4,5], (left, right) => left + right))// [5,7]
 
-[''].zip(
-    [1,2,3], 
-    (left, right) => left + right
-) 
-// []
+console.log([1,2,3].zip([], (left, right) => left + right)) // []
 
+console.log([].zip([1,2,3], (left, right) => left + right)) // []
 
