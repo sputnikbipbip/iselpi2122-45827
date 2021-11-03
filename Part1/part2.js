@@ -1,10 +1,10 @@
 'use strict'
 
-/*
 const fs = require('fs')
 const fetch = require("node-fetch")
 const client_id = process.env.ATLAS_CLIENT_ID;
 
+/*
 
 function urlBuilder () {
     return new Promise((resolve, reject) => {
@@ -39,14 +39,9 @@ urlBuilder()
 })
 */
 
-const fs = require('fs').promises
-const fetch = require("node-fetch")
-const client_id = process.env.ATLAS_CLIENT_ID;
-
-
 async function inspectorGadget () {
     try {
-        const url = await fs.readFile('./id.txt', 'utf8', (err, data) => {
+        const url = await fs.promises.readFile('./id.txt', 'utf8', (err, data) => {
             if (err) {
                 return console.log(err)
             }
@@ -55,7 +50,7 @@ async function inspectorGadget () {
         })
         const data = await fetch(url)
         const parsedData = await data.json()
-        const array = (parsedData) => parsedData.games.map((game) => {
+        const array = parsedData.games.map((game) => {
             return {
                 id : game.id,
                 name : game.name,
