@@ -65,3 +65,28 @@ console.log([1,2,3].zip([], (left, right) => left + right)) // []
 
 console.log([].zip([1,2,3], (left, right) => left + right)) // []
 
+'use strict'
+
+
+const fetch = require('node-fetch')
+const reducer = (prev, curr) => prev + curr
+
+function sumBodiesSize(... urls) {
+    return urls.forEach(url => fetch(url))
+        .then(res => {
+            const body = res.text()
+            return body
+        })
+        .map(body => body)
+        .reduce((reducer))
+}
+
+
+
+
+const array = [
+'https://developer.mozilla.org/pt-BR/docs/Web/JavaScript/Reference/Global_Objects/Array/reduce',
+'https://www.npmjs.com/package/node-fetch',
+'www.google.pt']
+
+console.log(sumBodiesSize(array))

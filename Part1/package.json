@@ -2,7 +2,7 @@
   "name": "trabalhos",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "part2.js",
   "scripts": {
     "test": "node test "
   },
@@ -11,5 +11,8 @@
   "devDependencies": {
     "jest": "^27.3.1",
     "lint": "^1.1.2"
+  },
+  "dependencies": {
+    "node-fetch": "^2.6.6"
   }
 }
