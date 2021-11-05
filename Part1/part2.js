@@ -30,19 +30,32 @@ let promises = fs.readFile('./id.txt', 'utf8')
 Promise.all(promises)
 */
 
-async function fetchGamesInfo () {
+async function fetchGamesInfo() {
     try {
-        const gamesIds = await (await fs.readFile('./id.txt', 'utf8')).split("\r\n")
-        const data = await fetch(`https://api.boardgameatlas.com/api/search?ids=${gamesIds.join(",")}&client_id=${client_id}`)
-        const parsedData = await data.json()
-        const filteredArray = parsedData.games.map((game) => {
-            return {
-                id : game.id,
-                name : game.name,
-                url : game.url
-            }
+        const gamesIds = (await fs.readFile('./id.txt', 'utf8')).split("\r\n")
+        const urls = gamesIds.map(gameId => {
+            return `https://api.boardgameatlas.com/api/search?ids=${gameId}&client_id=${client_id}`
         })
-        console.log(filteredArray)
+        console.log(urls)
+        let filteredGames = await Promise.all(
+            urls.map(async url => {
+                let response = await fetch(url)
+                let responseJSON = await response.json()
+                return responseJSON.games.map((game) => {
+                    console.log(`\nresult inside a single fetch :
+                        gameId ${game.id}
+                        gameName ${game.name}
+                        gameUrl ${game.url}`
+                        )
+                    return {
+                        id : game.id,
+                        name : game.name,
+                        url : game.url
+                    } 
+                })
+            })
+        )
+        console.log(filteredGames)
     } catch (err) {
         console.log(err)
     }
