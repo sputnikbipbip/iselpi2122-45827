@@ -5,27 +5,29 @@ const fetch = require("node-fetch")
 const client_id = process.env.ATLAS_CLIENT_ID;
 
 /*
-fs.readFile('./id.txt', 'utf8')
-    .then(data => data.split("\r\n"))
-    .then(gamesIds => `https://api.boardgameatlas.com/api/search?ids=${gamesIds.join(",")}&client_id=${client_id}`)
-    .then(url => {
+let promises = fs.readFile('./id.txt', 'utf8')
+    .then(data => data.split("\r\n")
+    .map(function(line) {
+        const url = `https://api.boardgameatlas.com/api/search?ids=${line}&client_id=${client_id}`
         console.log(`url is : ${url}`)
-        return fetch(url)}
-    )
-    .then(data => data.json())
-    .then(
-        data => data.games.map(function(game) {
-            return {
-                id : game.id,
-                name : game.name,
-                url : game.url
-            }
+        fetch(url)
+            .then(data => data.json())
+            .then(
+                data => data.games.map(function(game) {
+                    return {
+                        id : game.id,
+                        name : game.name,
+                        url : game.url
+                    }
+                })
+            )
+            .then(filteredGame => console.log(filteredGame))                         
+            .catch(function(error) {
+                console.log('There has been a problem with your fetch operation: ' + error.message);
         })
-    )
-    .then(filteredArray => console.log(filteredArray))                         
-    .catch(function(error) {
-        console.log('There has been a problem with your fetch operation: ' + error.message);
-})
+    }))
+
+Promise.all(promises)
 */
 
 async function fetchGamesInfo () {
