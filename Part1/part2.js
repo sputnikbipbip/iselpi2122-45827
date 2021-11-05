@@ -1,24 +1,13 @@
 'use strict'
 
-const fs = require('fs')
+const fs = require('fs').promises
 const fetch = require("node-fetch")
 const client_id = process.env.ATLAS_CLIENT_ID;
 
 /*
-
-function urlBuilder () {
-    return new Promise((resolve, reject) => {
-        fs.readFile('./id.txt', 'utf8', (err, data) => {
-            if (err) {
-                reject(err)
-            }
-            const gamesIds = data.split("\r\n")
-            resolve(`https://api.boardgameatlas.com/api/search?ids=${gamesIds.join(",")}&client_id=${client_id}`)
-        })
-    }) 
-}
-
-urlBuilder()
+fs.readFile('./id.txt', 'utf8')
+    .then(data => data.split("\r\n"))
+    .then(gamesIds => `https://api.boardgameatlas.com/api/search?ids=${gamesIds.join(",")}&client_id=${client_id}`)
     .then(url => {
         console.log(`url is : ${url}`)
         return fetch(url)}
@@ -33,36 +22,28 @@ urlBuilder()
             }
         })
     )
-    .then(array => console.log(array))                         
+    .then(filteredArray => console.log(filteredArray))                         
     .catch(function(error) {
         console.log('There has been a problem with your fetch operation: ' + error.message);
 })
 */
 
-async function inspectorGadget () {
+async function fetchGamesInfo () {
     try {
-        const url = await fs.promises.readFile('./id.txt', 'utf8', (err, data) => {
-            if (err) {
-                return console.log(err)
-            }
-            const gamesIds = data.split("\r\n")
-            return `https://api.boardgameatlas.com/api/search?ids=${gamesIds.join(",")}&client_id=${client_id}`
-        })
-        const data = await fetch(url)
+        const gamesIds = await (await fs.readFile('./id.txt', 'utf8')).split("\r\n")
+        const data = await fetch(`https://api.boardgameatlas.com/api/search?ids=${gamesIds.join(",")}&client_id=${client_id}`)
         const parsedData = await data.json()
-        const array = parsedData.games.map((game) => {
+        const filteredArray = parsedData.games.map((game) => {
             return {
                 id : game.id,
                 name : game.name,
                 url : game.url
             }
         })
-        console.log(array)
+        console.log(filteredArray)
     } catch (err) {
         console.log(err)
     }
 }
 
-inspectorGadget()
-
-
+fetchGamesInfo()
