@@ -1,7 +1,6 @@
 'use strict'
 
 const fetch = require('node-fetch')
-const reducer = (prev, curr) => prev + curr
 
 module.exports = {
     filterProperties,

@@ -9,12 +9,6 @@ const objs = [
     {x: 'Vision', y: false}
 ]
 
-const array = [
-    'https://developer.mozilla.org/pt-BR/docs/Web/JavaScript/Reference/Global_Objects/Array/reduce',
-    'https://www.npmjs.com/package/node-fetch',
-    'www.google.pt']
-
-
 test('Filter properties - ex1', () => {
     const oFiltered = part1.filterProperties(props, o)
     const expectedObject = {a: 1, b: 'Thor', d: {x: 10}}
