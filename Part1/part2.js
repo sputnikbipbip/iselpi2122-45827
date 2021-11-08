@@ -23,7 +23,7 @@ let promises = fs.readFile('./id.txt', 'utf8')
             )
             .then(filteredGame => console.log(filteredGame))                         
             .catch(function(error) {
-                console.log('There has been a problem with your fetch operation: ' + error.message);
+                handleError(error);
         })
     }))
 
@@ -42,7 +42,7 @@ async function fetchGamesInfo() {
                 let response = await fetch(url)
                 let responseJSON = await response.json()
                 return responseJSON.games.map((game) => {
-                    console.log(`\nresult inside a single fetch :
+                    console.log(`\nsingle fetch :
                         gameId ${game.id}
                         gameName ${game.name}
                         gameUrl ${game.url}`
@@ -57,7 +57,7 @@ async function fetchGamesInfo() {
         )
         console.log(filteredGames)
     } catch (err) {
-        console.log(err)
+        handleError(err) 
     }
 }
 

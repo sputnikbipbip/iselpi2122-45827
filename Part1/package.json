@@ -2,9 +2,9 @@
   "name": "trabalhos",
   "version": "1.0.0",
   "description": "",
-  "main": "part2.js",
+  "main": "part1.js",
   "scripts": {
-    "test": "node test "
+    "test" : "jest" 
   },
   "author": "",
   "license": "ISC",
